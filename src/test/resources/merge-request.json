@@ -1,0 +1,101 @@
+{
+  "object_kind": "merge_request",
+  "user": {
+    "name": "Ivan Kryvorotenko",
+    "username": "ikryvorotenko",
+    "avatar_url": "http://localhost/uploads/user/avatar/4/avatar.png"
+  },
+  "project": {
+    "name": "awesome-project",
+    "description": "",
+    "web_url": "http://localhost/gsync/awesome-project",
+    "avatar_url": null,
+    "git_ssh_url": "git@localhost:gsync/awesome-project.git",
+    "git_http_url": "http://localhost/gsync/awesome-project.git",
+    "namespace": "gsync",
+    "visibility_level": 0,
+    "path_with_namespace": "gsync/awesome-project",
+    "default_branch": "master",
+    "homepage": "http://localhost/gsync/awesome-project",
+    "url": "git@localhost:gsync/awesome-project.git",
+    "ssh_url": "git@localhost:gsync/awesome-project.git",
+    "http_url": "http://localhost/gsync/awesome-project.git"
+  },
+  "object_attributes": {
+    "id": 326,
+    "target_branch": "master",
+    "source_branch": "feature/US#1",
+    "source_project_id": 3,
+    "author_id": 12,
+    "assignee_id": null,
+    "title": "US#1 - Implement some functionality",
+    "created_at": "2016-08-12 08:23:58 UTC",
+    "updated_at": "2016-08-12 08:36:27 UTC",
+    "milestone_id": null,
+    "state": "merged",
+    "merge_status": "can_be_merged",
+    "target_project_id": 3,
+    "iid": 200,
+    "description": "",
+    "position": 0,
+    "locked_at": null,
+    "updated_by_id": null,
+    "merge_error": null,
+    "merge_params": {},
+    "merge_when_build_succeeds": false,
+    "merge_user_id": null,
+    "merge_commit_sha": "3d9245a4a49cc49b78dc45fe0072708368769649",
+    "deleted_at": null,
+    "source": {
+      "name": "awesome-project",
+      "description": "",
+      "web_url": "http://localhost/gsync/awesome-project",
+      "avatar_url": null,
+      "git_ssh_url": "git@localhost:gsync/awesome-project.git",
+      "git_http_url": "http://localhost/gsync/awesome-project.git",
+      "namespace": "gsync",
+      "visibility_level": 0,
+      "path_with_namespace": "gsync/awesome-project",
+      "default_branch": "master",
+      "homepage": "http://localhost/gsync/awesome-project",
+      "url": "git@localhost:gsync/awesome-project.git",
+      "ssh_url": "git@localhost:gsync/awesome-project.git",
+      "http_url": "http://localhost/gsync/awesome-project.git"
+    },
+    "target": {
+      "name": "awesome-project",
+      "description": "",
+      "web_url": "http://localhost/gsync/awesome-project",
+      "avatar_url": null,
+      "git_ssh_url": "git@localhost:gsync/awesome-project.git",
+      "git_http_url": "http://localhost/gsync/awesome-project.git",
+      "namespace": "gsync",
+      "visibility_level": 0,
+      "path_with_namespace": "gsync/awesome-project",
+      "default_branch": "master",
+      "homepage": "http://localhost/gsync/awesome-project",
+      "url": "git@localhost:gsync/awesome-project.git",
+      "ssh_url": "git@localhost:gsync/awesome-project.git",
+      "http_url": "http://localhost/gsync/awesome-project.git"
+    },
+    "last_commit": {
+      "id": "607e0e9ca331b5022af41ff05f21e52f106cc5cc",
+      "message": "DE2902 - Update edit form\n",
+      "timestamp": "2016-08-12T08:22:28+00:00",
+      "url": "http://localhost/gsync/awesome-project/commit/607e0e9ca331b5022af41ff05f21e52f106cc5cc",
+      "author": {
+        "name": "Ivan Kryvorotenko",
+        "email": "ikryvorotenko@gmail.com"
+      }
+    },
+    "work_in_progress": false,
+    "url": "http://localhost/gsync/awesome-project/merge_requests/200",
+    "action": "merge"
+  },
+  "repository": {
+    "name": "awesome-project",
+    "url": "git@localhost:gsync/awesome-project.git",
+    "description": "",
+    "homepage": "http://localhost/gsync/awesome-project"
+  }
+}
