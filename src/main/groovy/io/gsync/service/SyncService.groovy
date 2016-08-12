@@ -1,5 +1,6 @@
 package io.gsync.service
 
+import io.gsync.domain.Repo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -13,7 +14,7 @@ class SyncService {
         this.service = service
     }
 
-    def String pull(File repo) {
+    def String pull(Repo repo) {
         service.call([
             "git checkout master",
             "git pull",
@@ -23,10 +24,10 @@ class SyncService {
             "git checkout master",
             "git merge svnsync --no-edit",
             "git push"
-        ], repo)
+        ], repo.location)
     }
 
-    def String push(File repo, String commitMessage) {
+    def String push(Repo repo, String commitMessage) {
         return service.call([
             'git checkout master',
             'git pull',
@@ -36,7 +37,7 @@ class SyncService {
             'git checkout master',
             'git merge svnsync',
             'git push'
-        ], repo)
+        ], repo.location)
     }
 
 }

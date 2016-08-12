@@ -1,23 +1,25 @@
 package io.gsync.service
 
+import io.gsync.domain.Repo
 import org.junit.rules.TemporaryFolder;
 
 public class TestRepos extends TemporaryFolder {
 
     def File svnRepo
     def File gitRepo
-    def File syncRepo
     def File svnClient
     def File gitClient
 
-    def BashService service = new BashService();
+    def Repo syncRepo
+
+    def BashService bash = new BashService();
 
     @Override
     protected void before() throws Throwable {
         super.before()
         svnRepo = newFolder()
         gitRepo = newFolder()
-        syncRepo = newFolder()
+        syncRepo = new Repo(newFolder())
         svnClient = newFolder()
         gitClient = newFolder()
     }
@@ -35,7 +37,7 @@ public class TestRepos extends TemporaryFolder {
     }
 
     public 'commit file to git repo'(commitMessage) {
-        service.call([
+        bash([
             ("git checkout master"),
             ("echo 'hello world' >> test.txt"),
             "git add test.txt",
@@ -45,35 +47,35 @@ public class TestRepos extends TemporaryFolder {
     }
 
     public Integer svnRevision() {
-        service.call([
+        bash([
             "svn update"
         ], svnClient);
-        return service.call("svnversion", svnClient).toInteger()
+        return bash("svnversion", svnClient).toInteger()
     }
 
-    private  'init svn client repo'() {
-        service.call([
+    private 'init svn client repo'() {
+        bash([
             "svn co file://${svnRepo.absolutePath} .",
         ], svnClient)
     }
 
-    private  'commit to svn repo'() {
-        service.call([
+    private 'commit to svn repo'() {
+        bash([
             "echo 'hello world' >> test-svn.txt",
             "svn add test-svn.txt",
             "svn commit -m 'test commit'"
         ], svnClient)
     }
 
-    private  'init git client repo'() {
-        service.call([
+    private 'init git client repo'() {
+        bash([
             "git clone file://${gitRepo.absolutePath} ."
         ], gitClient)
     }
 
-
-    private  'init sync git repo'() {
-        service.call([
+    //todo extract to service
+    private 'init sync git repo'() {
+        bash([
             "git init",
             "git svn init file://${svnRepo.absolutePath}",
             "git checkout -b svnsync",
@@ -82,19 +84,19 @@ public class TestRepos extends TemporaryFolder {
 
             "git remote add origin file://${gitRepo.absolutePath}",
             "git push -u origin master"
-        ], syncRepo)
+        ], syncRepo.location)
     }
 
     private 'init global svn repo'() {
-        service.call("svnadmin create .", svnRepo)
+        bash("svnadmin create .", svnRepo)
     }
 
     private 'init global git repo'() {
-        service.call("git init --bare", gitRepo)
+        bash("git init --bare", gitRepo)
     }
 
     int gitCommits() {
-        service.call([
+        bash([
             "git checkout master",
             "git pull"
         ], gitClient)

@@ -1,26 +1,24 @@
 package io.gsync.service
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
 @Service
 class PullService {
 
-    @Value("\${gsync.repos}")
-    private String reposPath;
-
     def SyncService syncService
+    def FilesystemRepoService repoService
 
     @Autowired
-    PullService(SyncService syncService) {
+    PullService(SyncService syncService, FilesystemRepoService repoService) {
         this.syncService = syncService
+        this.repoService = repoService
     }
 
     @Scheduled(fixedDelay = 300000L)
     def pull() {
-        new File(reposPath).eachDir {
+        repoService.allRepos().each {
             syncService.pull(it)
         }
     }
