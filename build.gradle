@@ -4,9 +4,11 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
     }
 }
 
@@ -16,8 +18,8 @@ apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'gsync-root'
-    version = '0.0.1-SNAPSHOT'
+    baseName = 'gsync'
+    version = '0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -27,6 +29,10 @@ repositories {
 }
 
 dependencies {
+    compile('com.h2database:h2')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -36,4 +42,18 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.spockframework:spock-core:1.0-groovy-2.4")
     testCompile("cglib:cglib:3.2.0")
+}
+
+apply plugin: 'docker'
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = true
+    applicationName = jar.baseName
+    dockerfile = file('Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
 }

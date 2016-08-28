@@ -1,6 +1,7 @@
 package io.gsync.web
 
-import io.gsync.service.FilesystemRepoService
+import io.gsync.repository.RepoRepository
+import io.gsync.repository.UserRepository
 import io.gsync.service.SyncService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -13,13 +14,16 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/gitLab")
 class GitLabSyncController {
 
-    FilesystemRepoService repoService;
+    RepoRepository repoRepository;
+    UserRepository userRepository;
+
     SyncService syncService;
 
     @Autowired
-    GitLabSyncController(FilesystemRepoService repoService, SyncService syncService) {
-        this.repoService = repoService
+    GitLabSyncController(RepoRepository RepoRepository, SyncService syncService, UserRepository userRepository) {
+        this.repoRepository = RepoRepository
         this.syncService = syncService
+        this.userRepository = userRepository
     }
 
     @RequestMapping(
@@ -50,7 +54,9 @@ class GitLabSyncController {
             return ResponseEntity.badRequest().body("The attribute `title` is required");
         }
 
-        return ResponseEntity.ok(syncService.push(repoService.findRepo(name), title));
+        def user = userRepository.findByGitUsername(param["user"].username);
+
+        return ResponseEntity.ok(syncService.push(repoRepository.findByName(name), title, user));
     }
 
 }

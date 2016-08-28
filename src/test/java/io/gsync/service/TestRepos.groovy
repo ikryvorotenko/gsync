@@ -1,7 +1,6 @@
 package io.gsync.service
 
-import io.gsync.domain.Repo
-import org.junit.rules.TemporaryFolder;
+import org.junit.rules.TemporaryFolder
 
 public class TestRepos extends TemporaryFolder {
 
@@ -10,8 +9,6 @@ public class TestRepos extends TemporaryFolder {
     def File svnClient
     def File gitClient
 
-    def Repo syncRepo
-
     def BashService bash = new BashService();
 
     @Override
@@ -19,7 +16,6 @@ public class TestRepos extends TemporaryFolder {
         super.before()
         svnRepo = newFolder()
         gitRepo = newFolder()
-        syncRepo = new Repo(newFolder())
         svnClient = newFolder()
         gitClient = newFolder()
     }
@@ -31,13 +27,12 @@ public class TestRepos extends TemporaryFolder {
         'init svn client repo'()
         'commit to svn repo'()
 
-        'init sync git repo'();
-
         'init git client repo'()
     }
 
     public 'commit file to git repo'(commitMessage) {
         bash([
+            "git fetch",
             ("git checkout master"),
             ("echo 'hello world' >> test.txt"),
             "git add test.txt",
@@ -73,20 +68,6 @@ public class TestRepos extends TemporaryFolder {
         ], gitClient)
     }
 
-    //todo extract to service
-    private 'init sync git repo'() {
-        bash([
-            "git init",
-            "git svn init file://${svnRepo.absolutePath}",
-            "git checkout -b svnsync",
-            "git svn fetch",
-            "git checkout -b master",
-
-            "git remote add origin file://${gitRepo.absolutePath}",
-            "git push -u origin master"
-        ], syncRepo.location)
-    }
-
     private 'init global svn repo'() {
         bash("svnadmin create .", svnRepo)
     }
@@ -97,6 +78,7 @@ public class TestRepos extends TemporaryFolder {
 
     int gitCommits() {
         bash([
+            "git fetch",
             "git checkout master",
             "git pull"
         ], gitClient)

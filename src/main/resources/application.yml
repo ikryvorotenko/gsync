@@ -1,0 +1,13 @@
+spring.data.rest.base-path: /data
+
+gsync:
+
+  syncmaster:
+    svn:
+      username: syncmaster
+      password: password
+
+  repo.path: /etc/gsync
+
+server:
+  port: 9521
