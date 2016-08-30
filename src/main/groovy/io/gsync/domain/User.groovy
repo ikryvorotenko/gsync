@@ -1,9 +1,9 @@
 package io.gsync.domain
 
-import javax.persistence.Embeddable
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import com.fasterxml.jackson.annotation.JsonProperty
+import io.gsync.service.CryptoConverter
+
+import javax.persistence.*
 
 @Entity
 class User {
@@ -20,5 +20,9 @@ class User {
 @Embeddable
 class Credentials {
     String username
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Convert(converter = CryptoConverter.class)
     String password
+
 }
