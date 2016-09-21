@@ -12,18 +12,20 @@ public class BashService {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLUE = "\u001B[34m";
 
-    def call(List<String> commands, File file) {
+    String call(List<String> commands, File file, Boolean log = true) {
         def result = "";
 
         commands.each {
-            result += this.call(it as String, file) + System.lineSeparator()
+            result += this.call(it as String, file, log) + System.lineSeparator()
         }
 
         return result
     }
 
-    def String call(String cmd, File file) {
-        logger.info "$ANSI_BLUE\$ >$file.name ${cmd}$ANSI_RESET"
+    String call(String cmd, File file, Boolean log = true) {
+        if (log) {
+            logger.info "$ANSI_BLUE\$ >$file.name ${cmd}$ANSI_RESET"
+        }
 
         Process shell = new ProcessBuilder("bash", "-c", cmd).directory(file).start();
         shell.waitFor()

@@ -4,10 +4,10 @@ gsync:
 
   syncmaster:
     svn:
-      username: syncmaster
-      password: password
+      username: ${DEFAULT_SYNC_USER:syncmaster}
+      password: ${DEFAULT_SYNC_PASSWORD:password}
 
-  repo.path: /etc/gsync
+  repo.path: ${REPO_PATH:/etc/gsync}
 
 server:
   port: 9521

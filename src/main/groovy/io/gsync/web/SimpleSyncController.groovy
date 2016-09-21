@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/sync")
+@RequestMapping("/sync/{name}")
 class SimpleSyncController {
 
     RepoRepository repoRepository;
@@ -26,34 +25,33 @@ class SimpleSyncController {
         this.userRepository = userRepository
     }
 
-    @RequestMapping(
-        path = "/push/{repoId}"
-    )
-    def ResponseEntity<?> push(@PathVariable Long repoId, @RequestParam String message, @RequestParam String username) {
-        if (!message) {
-            return ResponseEntity.badRequest().body("The message is required")
-        }
-
-        def user = userRepository.findByGitUsername(username)
-
-        def repo = repoRepository.findOne(repoId);
-        return ResponseEntity.ok(syncService.push(repo, message, user));
+    @RequestMapping("/push")
+    def ResponseEntity<?> push(@PathVariable String name) {
+        def repo = repoRepository.findByName(name);
+        return ResponseEntity.ok(syncService.push(repo));
     }
 
-    @RequestMapping(
-        path = "/pull/{repoId}"
-    )
-    def ResponseEntity<?> pull(@PathVariable Long repoId) {
-        def repo = repoRepository.findOne(repoId);
+    @RequestMapping("/pull")
+    def ResponseEntity<?> pull(@PathVariable String name) {
+        def repo = repoRepository.findByName(name);
 
         return ResponseEntity.ok(syncService.pull(repo))
     }
 
-    @RequestMapping("/init/{repoId}")
-    def ResponseEntity<?> init(@PathVariable Long repoId) {
-        Repo repo = repoRepository.findOne(repoId)
+    @RequestMapping("/init")
+    def ResponseEntity<?> init(@PathVariable String name) {
+        Repo repo = repoRepository.findByName(name)
         return ResponseEntity.ok(
             syncService.init(repo)
         );
+    }
+
+    @RequestMapping("/status")
+    def ResponseEntity<?> status(@PathVariable String name) {
+        Repo repo = repoRepository.findByName(name)
+
+        return ResponseEntity.ok(
+            syncService.status(repo)
+        )
     }
 }
