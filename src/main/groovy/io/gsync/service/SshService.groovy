@@ -28,14 +28,14 @@ class SshService {
 
     def String createKey() {
         def home = home
-        def rsaPath = ".ssh/id_rsa.pub"
+        def rsaPath = ".ssh"
 
         if (new File("$home/$rsaPath/id_rsa.key").exists())
             throw new IllegalStateException("The ssh key already exists")
 
         new File("$home/$rsaPath").mkdirs()
 
-        return bash(["ssh-keygen -t rsa -N \"\" -f id_rsa.key"],
+        return bash(["ssh-keygen -t rsa -N \"\" -f id_rsa"],
             new File("$home/$rsaPath"))
     }
 }
