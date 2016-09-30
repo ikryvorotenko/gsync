@@ -8,9 +8,9 @@ To run this:
 ```
 docker run -d -p 9521:9521 \
  --name gsync \
- --volume /home/remote/git-sync:/etc/gsync \
- -e DEFAULT_SYNC_USER='kryvori' \
- -e DEFAULT_SYNC_PASSWORD='#kag8201' \
+ --volume /srv/gsync:/etc/gsync \
+ -e DEFAULT_SYNC_USER='username' \
+ -e DEFAULT_SYNC_PASSWORD='password' \
  -e GSYNC_KEY='NsA04KJDjNahYt62' \
  ikryvorotenko/gsync:0.1
  
