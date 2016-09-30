@@ -12,6 +12,6 @@ docker run -d -p 9521:9521 \
  -e DEFAULT_SYNC_USER='username' \
  -e DEFAULT_SYNC_PASSWORD='password' \
  -e GSYNC_KEY='NsA04KJDjNahYt62' \
- ikryvorotenko/gsync:0.1
+ ikryvorotenko/gsync:latest
  
 ```
