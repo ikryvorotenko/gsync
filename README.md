@@ -11,7 +11,7 @@ docker run -d -p 9521:9521 \
  --volume /srv/gsync:/etc/gsync \
  -e DEFAULT_SYNC_USER='username' \
  -e DEFAULT_SYNC_PASSWORD='password' \
- -e GSYNC_KEY='NsA04KJDjNahYt62' \
+ -e GSYNC_KEY='gsync_key_goes_here' \
  ikryvorotenko/gsync:latest
  
 ```
