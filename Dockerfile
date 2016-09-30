@@ -10,6 +10,6 @@ RUN mkdir -p /etc/gsync
 
 VOLUME /tmp
 
-ADD gsync-0.1-SNAPSHOT.jar /etc/gsync/app.jar
+ADD gsync-0.1-SNAPSHOT.jar /app.jar
 
-CMD java -jar /etc/gsync/app.jar
+CMD java -jar /app.jar

@@ -48,7 +48,7 @@ apply plugin: 'docker'
 
 task buildDocker(type: Docker, dependsOn: build) {
     push = true
-    applicationName = jar.baseName
+    applicationName = 'ikryvorotenko/gsync'
     dockerfile = file('Dockerfile')
     doFirst {
         copy {
